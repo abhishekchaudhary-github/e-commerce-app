@@ -13,10 +13,12 @@ const authRouter = require('./routes/authRoutes')
 
 app.use(morgan('tiny'))
 app.use(express.json())
-app.use(cookieParser)
+app.use(cookieParser(process.env.COOKIE_KEY))
 app.get('/',(req,res)=>{
-    res.send('/api/v1/auth',authRouter)
+    res.send('hi')
 })
+
+app.use('/api/v1/auth',authRouter)
 app.use(authRouter)
 app.use(notFound)
 app.use(errorHandler)
