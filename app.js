@@ -4,6 +4,7 @@ require('dotenv').config()
 const app = express()
 
 const morgan = require('morgan')
+const cookieParser = require('cookie-parser')
 
 const connectdb = require('./db/connect')
 const notFound = require('./middleware/not-found')
@@ -12,6 +13,7 @@ const authRouter = require('./routes/authRoutes')
 
 app.use(morgan('tiny'))
 app.use(express.json())
+app.use(cookieParser)
 app.get('/',(req,res)=>{
     res.send('/api/v1/auth',authRouter)
 })
