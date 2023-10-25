@@ -10,7 +10,7 @@ const register = async (req, res) => {
     (await User.countDocuments({})) === 0 ? role = 'admin' : role = 'user'
     const {name,email,password} = req.body //role ignored
     const user = await User.create(req.body)
-    const tokenUser= {name:user.name,userId:user._id}
+    const tokenUser= {name:user.name,userId:user._id,role:role}
     attactCookiesToResponse(res,tokenUser)
     // const token = createJwt({payload:tokenUser})
     // res.cookie('token',token, {
@@ -34,7 +34,7 @@ const login = async (req, res) => {
       if (!isPasswordCorrect) {
         throw new CustomError.UnauthenticatedError('Invalid Credentials');
       }
-      const tokenUser= {name:user.name,userId:user._id}
+      const tokenUser= {name:user.name,userId:user._id,role:user.role}
       attactCookiesToResponse(res,tokenUser)
       res.status(StatusCodes.CREATED).json({tokenUser,token})
 }

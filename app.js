@@ -10,6 +10,8 @@ const connectdb = require('./db/connect')
 const notFound = require('./middleware/not-found')
 const errorHandler = require('./middleware/error-handler') //applies try catch to all middlewares
 const authRouter = require('./routes/authRoutes')
+const userRouter = require('./routes/userRoutes');
+const {authentication} = require('./middleware/authentication')
 
 app.use(morgan('tiny'))
 app.use(express.json())
@@ -19,6 +21,7 @@ app.get('/',(req,res)=>{
 })
 
 app.use('/api/v1/auth',authRouter)
+app.use('/api/v1/users', userRouter);
 app.use(authRouter)
 app.use(notFound)
 app.use(errorHandler)
